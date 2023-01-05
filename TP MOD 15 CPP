@@ -1,0 +1,80 @@
+#include "TPMOD15.h"
+
+adrNode newNode_1301213487(infotype X){
+    adrNode P = new node;
+    info(P) = X;
+    left(P) = Nil;
+    right(P) = Nil;
+    return P;
+}
+
+adrNode findNode_1301213487(adrNode root, infotype X){
+    adrNode P = root;
+    while(left(P) != Nil){
+        if(info(P) == X){
+            return P;
+        }
+        P = left(P);
+    }
+    return P;
+}
+
+void insertNode_1301213487(adrNode &root, adrNode P){
+    if(root == Nil){
+        root = P;
+    }else if(info(P) <= info(root)){
+        insertNode_1301213487(left(root),P);
+    }else if(info(P) > info(root)){
+        insertNode_1301213487(right(root),P);
+    }else if(info(P) == info(root)){
+        cout << "Node sudah terdefinisi" << endl;
+    }
+}
+
+void printPreOrder_1301213487(adrNode root){
+    if(root == Nil){
+        return;
+    }
+    cout << info(root) << " ";
+    printPreOrder_1301213487(left(root));
+    printPreOrder_1301213487(right(root));
+}
+
+void printDescendant_1301213487(adrNode root, infotype X){
+    if(root != Nil){
+        printDescendant_1301213487(left(root),X);
+        printDescendant_1301213487(right(root),X);
+        if(info(root) == X){
+            printPreOrder_1301213487(left(root));
+            printPreOrder_1301213487(right(root));
+        }
+    }
+}
+
+int sumNode_1301213487(adrNode root){
+    if(root != Nil){
+        return (info(root) + sumNode_1301213487(left(root)) + sumNode_1301213487(right(root)));
+
+    }
+    return 0;
+}
+
+int countLeaves_1301213487(adrNode root){
+    if(root == Nil){
+        return 0;
+    }
+    if(left(root) == Nil && right(root) == Nil){
+        return 1;
+    }
+    return countLeaves_1301213487(left(root)) + countLeaves_1301213487(right(root));
+}
+
+int heightTree_1301213487(adrNode root){
+    if(root == Nil){
+        return 0;
+    }else{
+        int left_height = heightTree_1301213487(left(root));
+        int right_height = heightTree_1301213487(right(root));
+        return max(left_height,right_height)+1;
+    }
+}
